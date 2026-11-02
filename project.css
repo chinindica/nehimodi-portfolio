@@ -85,3 +85,18 @@ html.lin .btn2{font-size:15px;padding:0 20px}
 /* Kshovik: purple highlight behind the chosen sketches */
 .glow{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);z-index:2;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(150,55,115,.85) 0%,rgba(120,40,95,.6) 45%,rgba(90,25,70,0) 75%);filter:blur(6px)}
 html.lin .qbox,html.lin .glow{display:none}
+
+/* ---------- phone/tablet groupings (no effect on desktop) ---------- */
+.mgrid,.mcol,.mfig,.mfi{display:contents}
+html.lin .el.t{text-align:left!important}
+html.lin .mgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 18px;width:100%;margin:8px 0 26px}
+@media (min-width:640px){html.lin .mgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+html.lin .mcol{display:flex;flex-direction:column;align-items:flex-start;min-width:0}
+html.lin .mcol .el{margin:0 0 6px}
+html.lin .mcol .el.i,html.lin .mcol .el.i.sm{width:auto;max-width:100%;max-height:150px;margin:6px 0 10px;object-fit:contain}
+html.lin .mcol .el.t{font-size:min(var(--mfs),15px)!important}
+html.lin .mfig{display:block;position:relative;width:100%;overflow:hidden;margin:10px 0 26px}
+html.lin .mfi{display:block;position:absolute;left:0;top:0;width:calc(var(--bw) * 1px);height:calc(var(--bh) * 1px);zoom:var(--k,.3)}
+html.lin .mfig .el{position:absolute;left:calc(var(--x) - var(--bx) * 1px);top:calc(var(--y) - var(--by) * 1px);width:var(--w);margin:0;max-width:none}
+html.lin .mfig .el.i{height:var(--h);width:var(--w);margin:0}
+html.lin .mfig .el.t{font-size:calc(var(--fs0) * var(--boost,1))!important;line-height:1.2!important;white-space:nowrap!important;width:auto}

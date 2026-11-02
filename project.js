@@ -7,7 +7,10 @@
     const w=document.documentElement.clientWidth;
     const lin=w<1000;
     document.documentElement.classList.toggle('lin',lin);
-    if(lin){pc.style.removeProperty('--z');wrap.style.height='';return}
+    if(lin){pc.style.removeProperty('--z');wrap.style.height='';
+      document.querySelectorAll('.mfig').forEach(f=>{const bw=+getComputedStyle(f).getPropertyValue('--bw'),bh=+getComputedStyle(f).getPropertyValue('--bh');const k=f.clientWidth/bw;
+        f.style.setProperty('--k',k.toFixed(4));f.style.setProperty('--boost',Math.min(1.9,Math.max(1,.7/k)).toFixed(3));f.style.height=(bh*k+8)+'px'});
+      return}
     const z=Math.min(1,w/1512);
     pc.style.setProperty('--z',z);
     pc.style.setProperty('--bleed',Math.max(0,(w-1512)/2)+'px');
