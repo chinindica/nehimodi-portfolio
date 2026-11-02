@@ -38,17 +38,18 @@ if(bulb){
 }
 
 // design POV: flowing red silk behind the heading (WebGL warp, same settings as the Framer gradient), falls back to the static drawing
-(function(){
-  const c=document.querySelector('canvas.silk');if(!c)return;
+function warpBG(c,o){
+  if(!c)return;
+  o=o||{};const OX=o.ox??.63,OY=o.oy??-.36,ROT=o.rot??-217,SPEED=o.speed??16,MIXR=o.mix??.68;
   let gl=c.getContext('webgl2',{antialias:false,premultipliedAlpha:false,powerPreference:'low-power'});let v2=!!gl;
   if(!gl){gl=c.getContext('webgl',{antialias:false,premultipliedAlpha:false})||c.getContext('experimental-webgl');if(!gl)return;gl.getExtension('OES_standard_derivatives')}
   const body=`
   uniform vec2 r;uniform float t,dpr,k;
   void main(){
     vec2 css=r/dpr;
-    vec2 uv=(gl_FragCoord.xy/dpr-.5*css)-vec2(.63*css.x,-.36*css.y);
+    vec2 uv=(gl_FragCoord.xy/dpr-.5*css)-vec2(OXV*css.x,OYV*css.y);
     uv/=k;
-    float a=-217.*3.14159265/180.;uv=mat2(cos(a),sin(a),-sin(a),cos(a))*uv;uv*=.005;
+    float a=ROTV*3.14159265/180.;uv=mat2(cos(a),sin(a),-sin(a),cos(a))*uv;uv*=.005;
     float T=.0625*(t+118.);
     for(int i=1;i<16;i++){float f=float(i);uv.x+=.47/f*cos(T+f*1.5*uv.y);uv.y+=.47/f*cos(T+f*uv.x);}
     vec2 cu=uv*.85;
@@ -58,11 +59,12 @@ if(bulb){
     for(int i=1;i<3;i++){float m=clamp(mixer-float(i-1),0.,1.);float ls=floor(m);
       float sf=.235+fwidth(m);float sm=smoothstep(max(0.,.5-sf-aa),min(1.,.5+sf+aa),m-ls);
       m=mix(ls+sm,m,.47);g=mix(g,i==1?c1:c0,m);}
-    g=mix(c0,g,.68);
+    g=mix(c0,g,MIXV);
     g+=(fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453)-.5)*.035;
     OUT=vec4(g,1.);}`;
-  const fs=v2?'#version 300 es\nprecision highp float;out vec4 o;\n#define OUT o\n'+body
-             :'#extension GL_OES_standard_derivatives : enable\nprecision highp float;\n#define OUT gl_FragColor\n'+body;
+  const num=v=>(+v).toFixed(4);const bodyP=body.replace('OXV',num(OX)).replace('OYV',num(OY)).replace('ROTV',num(ROT)).replace('MIXV',num(MIXR));
+  const fs=v2?'#version 300 es\nprecision highp float;out vec4 o;\n#define OUT o\n'+bodyP
+             :'#extension GL_OES_standard_derivatives : enable\nprecision highp float;\n#define OUT gl_FragColor\n'+bodyP;
   const vs=v2?'#version 300 es\nin vec2 a;void main(){gl_Position=vec4(a,0.,1.);}':'attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}';
   const sh=(ty,s)=>{const o=gl.createShader(ty);gl.shaderSource(o,s);gl.compileShader(o);return o};
   const pr=gl.createProgram();gl.attachShader(pr,sh(gl.VERTEX_SHADER,vs));gl.attachShader(pr,sh(gl.FRAGMENT_SHADER,fs));
@@ -72,20 +74,22 @@ if(bulb){
   const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
   gl.enableVertexAttribArray(0);gl.vertexAttribPointer(0,2,gl.FLOAT,false,0,0);
   const U=n=>gl.getUniformLocation(pr,n),ur=U('r'),ut=U('t'),ud=U('dpr'),uk=U('k');
-  c.parentElement.classList.add('gl');
+  if(c.parentElement)c.parentElement.classList.add('gl');
   let vis=true;new IntersectionObserver(e=>{vis=e[0].isIntersecting}).observe(c);
   let dpr=1;
   const size=()=>{dpr=Math.min(window.devicePixelRatio||1,1.5);c.width=Math.max(1,Math.round(c.clientWidth*dpr));c.height=Math.max(1,Math.round(c.clientHeight*dpr));gl.viewport(0,0,c.width,c.height)};
   size();addEventListener('resize',size);
-  const SPEED=16,t0=performance.now();
-  const frame=now=>{if(vis&&!document.hidden){const k=Math.max(.45,c.clientWidth/1512);
+  const t0=performance.now();
+  const frame=now=>{if(!c.isConnected)return;if(vis&&!document.hidden){const k=Math.max(.45,c.clientWidth/1512);
     gl.uniform2f(ur,c.width,c.height);gl.uniform1f(ud,dpr);gl.uniform1f(uk,k);gl.uniform1f(ut,(now-t0)/1000*SPEED);gl.drawArrays(gl.TRIANGLES,0,3)}
     requestAnimationFrame(frame)};
   requestAnimationFrame(frame);
-})();
+}
+warpBG(document.querySelector('canvas.silk'));
 
 // intro (home only, once per visit)
 const intro=document.getElementById('intro');
+if(intro)warpBG(intro.querySelector('canvas.fire'),{ox:.15,oy:-.75,rot:-200,speed:20,mix:.85});
 if(intro){let seen=false;try{seen=sessionStorage.getItem('intro')}catch(e){}
  if(seen){intro.remove()}else{
   setTimeout(()=>{intro.classList.add('done');intro.querySelector('p').textContent='Unlocked'},2900);
@@ -112,16 +116,15 @@ document.querySelectorAll('button.copy').forEach(b=>b.addEventListener('click',a
   addEventListener('resize',place);addEventListener('load',place);place();
 })();
 
-// footer: the big NEHI MODI rises up from below as you reach the end of the page (eased, a touch behind the scroll)
+// footer: the big NEHI MODI rises up from below each time the footer comes into view
 (function(){
   const big=document.querySelector('footer .big'),svg=big&&big.querySelector('svg');if(!svg)return;
-  let cur=0,tgt=0,raf=0;
-  const target=()=>{const t=big.getBoundingClientRect().top,h=big.offsetHeight||1;tgt=Math.min(Math.max((innerHeight-t)/h,0),1)};
-  const step=()=>{cur+=(tgt-cur)*.12;if(Math.abs(tgt-cur)<.001)cur=tgt;
-    const e=cur*cur*(3-2*cur);svg.style.transform='translate3d(0,'+((1-e)*100).toFixed(2)+'%,0)';
-    raf=cur!==tgt?requestAnimationFrame(step):0};
-  const kick=()=>{target();if(!raf)raf=requestAnimationFrame(step)};
-  addEventListener('scroll',kick,{passive:true});addEventListener('resize',kick);kick();
+  big.classList.add('rise');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(e.isIntersecting&&e.intersectionRatio>=.35)big.classList.add('up');
+    else if(!e.isIntersecting)big.classList.remove('up');
+  }),{threshold:[0,.35]});
+  io.observe(big);
 })();
 
 // every page opens at the top (e.g. "Next project" lands on the project's start), instantly, no scrolling animation

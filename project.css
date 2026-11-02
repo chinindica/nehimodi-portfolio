@@ -134,3 +134,30 @@ html.lin .hov{display:none!important}
 html.lin .dsk{display:none!important}
 html.lin .el.mob{display:flex;flex-direction:column;gap:14px;width:100%;margin:6px 0 10px}
 html.lin .el.mob img{width:100%;height:auto;border-radius:4px}
+
+/* Ecohumps: the stats take turns lighting the people row; the active one is bright with a red underline */
+.seq{cursor:none;transition:opacity .5s,transform .7s}
+html.statson .seq.in{opacity:.42}
+html.statson .seq.in.act{opacity:1}
+.seq::after{content:"";position:absolute;left:0;bottom:-10px;height:2px;width:0;background:#d6390c;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.seq.act::after{width:46px}
+.seq:hover{opacity:1!important}
+html.lin .seq{opacity:1!important}html.lin .seq::after{display:none}
+
+/* rounded outline boxes, connector dots, arrows (ReRoot / Off-Clock) */
+.rbox{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);border:1.6px solid;z-index:1;pointer-events:none}
+.pdot{position:absolute;left:var(--x);top:var(--y);width:12px;height:12px;border-radius:50%;background:#121212;border:2px solid #2d6fd8;box-shadow:inset 0 0 0 2px #121212,inset 0 0 0 6px #2d6fd8;z-index:2}
+.arw{position:absolute;left:var(--x);top:var(--y);width:60px;height:24px;z-index:2;transform-origin:30px 12px;pointer-events:none}
+.arw svg{display:block}
+html.lin .rbox,html.lin .pdot,html.lin .arw{display:none}
+/* Off-Clock: volunteer demographics bars */
+.el.bar{height:var(--h);border-radius:8px;background:linear-gradient(90deg,#e2b98d 0 var(--p),#f7e3cb var(--p));z-index:2;display:flex;align-items:center;padding-left:12px;box-sizing:border-box;
+ transform-origin:left center;transform:scaleX(.001);transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
+.el.bar.in{transform:none}
+.el.bar span{font-size:13px;color:#7a6650;white-space:nowrap;letter-spacing:-.01em}
+html.lin .el.bar{position:relative;left:auto;top:auto;width:min(100%,var(--w))!important;transform:none;margin:4px 0 8px}
+/* dashed connector paths draw themselves in as you scroll */
+.el.i.draw{clip-path:inset(0 var(--dr,100%) 0 0)}
+.el.i.drawv{clip-path:inset(0 0 var(--dr,100%) 0)}
+html.lin .el.i.draw,html.lin .el.i.drawv{clip-path:none}
+html.lin .el.bar span{font-size:10.5px}html.lin img.draw{display:none}

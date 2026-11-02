@@ -32,7 +32,14 @@
   if(seq.length){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){seq.sort((a,b)=>a.dataset.seq-b.dataset.seq).forEach((e,k)=>setTimeout(()=>e.classList.add('in'),k*650));io.disconnect()}},{threshold:.3});io.observe(seq[0])}
   // Ecohumps: hovering a stat lights up that share of the people row
   const hov=document.querySelector('.hov');
-  if(hov){const imgs=[...hov.querySelectorAll('img')];document.querySelectorAll('.seq').forEach(s=>{const n=s.dataset.seq;s.addEventListener('mouseenter',()=>imgs.forEach(i=>i.classList.toggle('on',i.dataset.for===n)))})}
+  if(hov){const imgs=[...hov.querySelectorAll('img')];const stats=[...document.querySelectorAll('.seq')].sort((a,b)=>a.dataset.seq-b.dataset.seq);
+    // the stats take turns on their own, so it is clear each number drives the row of people; hovering takes over
+    let k=0,auto=null,idle=null;
+    const show=n=>{imgs.forEach(i=>i.classList.toggle('on',i.dataset.for===String(n)));stats.forEach(s=>s.classList.toggle('act',s.dataset.seq===String(n)));document.documentElement.classList.add('statson')};
+    const start=()=>{clearInterval(auto);auto=setInterval(()=>{k=(k+1)%stats.length;show(stats[k].dataset.seq)},2400)};
+    stats.forEach((s,i)=>{s.addEventListener('mouseenter',()=>{clearInterval(auto);clearTimeout(idle);k=i;show(s.dataset.seq)});
+      s.addEventListener('mouseleave',()=>{clearTimeout(idle);idle=setTimeout(start,3000)})});
+    new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!auto){show(stats[0].dataset.seq);start()}}else{clearInterval(auto);auto=null}},{threshold:.4}).observe(stats[0]);}
 })();
 
 // videos start from the beginning when scrolled into view, pause when they leave
@@ -43,4 +50,15 @@
     else if(e.intersectionRatio===0||!e.isIntersecting){v.pause();v._playing=false}
   }),{threshold:.35});
   vids.forEach(v=>io.observe(v));
+})();
+
+// Off-Clock: demographic bars fill in; the dashed path draws itself as you scroll down to it
+(function(){
+  const bars=[...document.querySelectorAll('.el.bar')];
+  if(bars.length){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){bars.forEach((b,k)=>setTimeout(()=>b.classList.add('in'),k*180));io.disconnect()}}),{threshold:.4});io.observe(bars[0])}
+  const paths=[['YGUPwCpHlD0MY5LhPLBasfDctA','draw'],['3J8ZDwPjdo8BmCso4gRZwHbZVc','draw']].map(([id,c])=>{const i=document.querySelector('img[src*="'+id+'"]');if(i)i.classList.add(c);return i}).filter(Boolean);
+  if(!paths.length)return;
+  const upd=()=>{if(document.documentElement.classList.contains('lin'))return;const H=innerHeight;
+    paths.forEach(i=>{const r=i.getBoundingClientRect();const p=Math.min(Math.max((H*.9-r.top)/(r.height+H*.35),0),1);i.style.setProperty('--dr',((1-p)*100).toFixed(1)+'%')})};
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
 })();
