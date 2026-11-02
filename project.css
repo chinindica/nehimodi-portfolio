@@ -65,3 +65,23 @@ html.lin .stat b{font-size:84px;line-height:1.1}
 html.lin .stat p{position:static;width:auto;font-size:18px;line-height:1.45}
 html.lin .feel{position:relative;left:auto;top:auto;height:3em!important;width:100%}
 html.lin .seq{opacity:1;transform:none}
+
+/* back / next buttons */
+.pnav{z-index:3;display:flex;justify-content:center;gap:22px}
+.btn2{display:inline-block;font-size:17px;font-weight:600;line-height:44px;padding:0 28px;color:#ccc;border:1.5px solid #cfcfcf;border-radius:30px;transition:color .25s,border-color .25s,background .25s;white-space:nowrap}
+.btn2:hover{color:#d0310f;border-color:#d0310f}
+.btn2.next{background:#e6e6e6;color:#111;border-color:#e6e6e6}
+.btn2.next:hover{background:#d0310f;border-color:#d0310f;color:#fff}
+html.lin .pnav{width:100%;flex-wrap:wrap;gap:12px;margin-top:30px}
+html.lin .btn2{font-size:15px;padding:0 20px}
+
+/* Nautilume: bracket boxes with red quote marks */
+.qbox{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);border-left:2.5px solid #8f8f8f;border-right:2.5px solid #8f8f8f;z-index:1}
+.qbox:before,.qbox:after{content:"";position:absolute;left:-2.5px;right:-2.5px;height:2.5px;background:linear-gradient(90deg,#8f8f8f 0 40px,transparent 40px calc(100% - 40px),#8f8f8f calc(100% - 40px))}
+.qbox:before{top:0}.qbox:after{bottom:0}
+.qbox b{position:absolute;color:#b8361a;font:700 44px/1 Georgia,serif}
+.qbox .q1{top:-13px;left:58px}.qbox .q2{bottom:-30px;right:52px}
+
+/* Kshovik: purple highlight behind the chosen sketches */
+.glow{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);z-index:2;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(150,55,115,.85) 0%,rgba(120,40,95,.6) 45%,rgba(90,25,70,0) 75%);filter:blur(6px)}
+html.lin .qbox,html.lin .glow{display:none}
