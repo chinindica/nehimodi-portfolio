@@ -100,3 +100,37 @@ html.lin .mfi{display:block;position:absolute;left:0;top:0;width:calc(var(--bw) 
 html.lin .mfig .el{position:absolute;left:calc(var(--x) - var(--bx) * 1px);top:calc(var(--y) - var(--by) * 1px);width:var(--w);margin:0;max-width:none}
 html.lin .mfig .el.i{height:var(--h);width:var(--w);margin:0}
 html.lin .mfig .el.t{font-size:calc(var(--fs0) * var(--boost,1))!important;line-height:1.2!important;white-space:nowrap!important;width:auto}
+
+/* tools used: one clean icon each */
+.el.tools{z-index:3;display:flex;align-items:center;gap:12px;height:var(--h);width:auto}
+.el.tools img{height:100%;width:auto;max-width:none;display:block}
+html.lin .el.tools{height:24px;gap:10px;margin:4px 0 18px}
+
+/* ---------- phone/tablet: rows and columns kept together (XY-cut) ---------- */
+.xs,.xr,.xi,.xc,.xcc,.xl{display:contents}
+html.lin .xs{display:block;width:100%;margin:0 0 44px}
+html.lin .xr{display:block;width:100%}
+html.lin .xi{display:block;width:100%;margin-top:var(--g,12px)}
+html.lin .xr>.xi:first-child{margin-top:0}
+html.lin .xc{display:grid;grid-template-columns:var(--cols);gap:16px 14px;width:100%;align-items:start}
+html.lin .xcc{display:block;min-width:0}
+html.lin .xl{display:block;width:100%}
+html.lin .xl>.el.i,html.lin .xl>.el.i.sm{width:var(--pw)!important;max-width:100%;height:auto;margin:0}
+html.lin .xs .el{margin:0}
+html.lin .xs .el.t{margin:0}
+html.lin .xc .el.t{font-size:min(var(--mfs),13.5px)!important;line-height:1.4!important}
+html.lin .xc .el.i{margin:0 0 6px}
+html.lin .xs .mfig{margin:4px 0}
+html.lin .feel{font-size:min(var(--mfs),24px)!important;height:2.8em!important}
+html.lin .feel span{white-space:normal!important}
+.xdeco{display:contents}
+html.lin .xdeco{display:flex;justify-content:center;align-items:flex-end;gap:18px;width:100%;margin-top:18px}
+html.lin .xdeco .el.i{width:auto!important;max-width:45%;max-height:170px;height:auto;margin:0;object-fit:contain}
+
+html.lin .xl>.el.i[data-hero]{width:min(82%,340px)!important;margin:0 auto}
+html.lin .xl>.el.i{clip-path:var(--clipp,none)}
+html.lin .hov{display:none!important}
+.el.mob{display:none}
+html.lin .dsk{display:none!important}
+html.lin .el.mob{display:flex;flex-direction:column;gap:14px;width:100%;margin:6px 0 10px}
+html.lin .el.mob img{width:100%;height:auto;border-radius:4px}

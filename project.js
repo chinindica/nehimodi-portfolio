@@ -17,6 +17,7 @@
     wrap.style.height=(parseFloat(getComputedStyle(pc).getPropertyValue('--H'))*z)+'px';
   };
   fit();addEventListener('resize',fit);
+  const top=()=>{if(!location.hash)window.scrollTo({top:0,left:0,behavior:'instant'})};top();addEventListener('load',top);addEventListener('pageshow',top);
 
   // Kshovik survey stat: 70% → 58% → 60% → 65%
   const sv=[...document.querySelectorAll('.stat .sv')];
