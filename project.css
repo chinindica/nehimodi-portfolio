@@ -1,0 +1,67 @@
+/* Project pages: a 1512px canvas measured from the original Framer pages, scaled to the window. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+body.projpage{background:#121212}
+.pcw{position:relative;overflow:hidden}
+.pc{position:relative;width:1512px;height:var(--H);margin:0 auto;zoom:var(--z,1);color:#ccc}
+.pc .band{position:absolute;left:0;right:0;top:var(--y);height:var(--h)}
+.pc .band{left:calc(-1 * var(--bleed,0px));right:calc(-1 * var(--bleed,0px))}
+.pc .band.narrow{left:156px;right:156px}
+.vclip{position:absolute;left:0;top:0;width:1512px;height:var(--hero);overflow:hidden;z-index:3;pointer-events:none}
+.vt{position:absolute;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1.1;white-space:nowrap}
+.el{position:absolute;left:var(--x);top:var(--y);width:var(--w)}
+.el.t{z-index:2;font-family:Roboto,system-ui,sans-serif}
+.el.i{z-index:1;height:var(--h);object-fit:cover;max-width:none}
+.el.i.missing{visibility:hidden}
+.el.i.big{z-index:0}
+.el.i{clip-path:var(--clip,none)}
+html.lin .el.i{clip-path:none}
+.el.btn{z-index:3;display:block;text-align:center;font-size:19px;font-weight:700;line-height:44px;color:#ccc;border:1.5px solid #cfcfcf;border-radius:30px;transition:color .25s,border-color .25s}
+.el.btn:hover{color:#d0310f;border-color:#d0310f}
+.dots{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:5px;background:radial-gradient(circle,#8a8a8a 1.6px,transparent 2.1px) 0 0/8px 5px repeat-x;z-index:2}
+.lead{position:absolute;left:var(--x);top:var(--y);width:var(--w);border-top:1px dashed #8a8a8a;z-index:2}
+.box{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);border:1.5px solid;border-radius:12px;z-index:1}
+.pin{position:absolute;left:var(--x);top:var(--y);width:9px;height:9px;border-radius:50%;background:#e0e0e0;z-index:2}
+
+/* Kshovik: rotating survey stat */
+.stat{z-index:2;height:270px}
+.stat .sv{position:absolute;inset:0;opacity:0;transition:opacity .7s ease}
+.stat .sv.on{opacity:1}
+.stat b{display:block;font-size:150px;line-height:210px;font-weight:700;color:#ccc}
+.stat p{position:absolute;left:0;top:187px;width:492px;font-size:23px;line-height:32.2px;color:#ccc}
+.stat em{font-style:normal;color:#a5527c}
+
+/* Kshovik: "Utensil washing can feel…" cycling line */
+.feel{overflow:hidden;position:absolute}
+.feel span{position:absolute;left:0;right:0;top:0;opacity:0;transform:translateY(60%);transition:opacity .6s,transform .6s}
+.feel span.on{opacity:1;transform:none}
+.feel span.out{opacity:0;transform:translateY(-60%)}
+
+/* Ecohumps: people row changes with the stat under the cursor */
+.hov{z-index:1;height:var(--h);pointer-events:none}
+.hov img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;max-width:none;opacity:0;transition:opacity .35s}
+.hov img.on{opacity:1}
+.seq{cursor:default}
+html.lin .hov{position:relative;left:auto;top:auto;width:100%;height:auto;aspect-ratio:16/9;margin:-14% 0 -12%}
+
+/* Ecohumps: survey stats appear one after another */
+.seq{opacity:0;transform:translateY(14px);transition:opacity .7s,transform .7s}
+.seq.in{opacity:1;transform:none}
+
+/* ---------- Tablets and phones: same content, stacked in reading order ---------- */
+html.lin .pcw{overflow:visible}
+html.lin .pc{zoom:1;width:auto;height:auto;padding:110px 22px 60px;display:flex;flex-direction:column;align-items:flex-start;background:var(--herobg,none) no-repeat 0 0/100% 760px}
+html.lin .pc .band,html.lin .box,html.lin .vclip,html.lin .dots,html.lin .lead,html.lin .pin{display:none}
+
+html.lin .el{position:static;width:auto;max-width:100%;margin:0 0 16px}
+html.lin .el.t{font-size:var(--mfs)!important;line-height:1.45!important;white-space:normal!important;width:100%}
+html.lin .el.t span[style*="font-size"]{font-size:inherit!important}
+html.lin .el.i{width:min(100%,var(--w));height:auto;margin:6px 0 22px}
+html.lin .el.i.sm{width:min(40%,var(--w))}
+html.lin .el.i.missing{display:none}
+html.lin .el.btn{align-self:center;padding:0 30px;margin-top:30px}
+html.lin .stat{position:relative;left:auto;top:auto;width:100%;height:auto;min-height:200px}
+html.lin .stat .sv{position:absolute;left:0;right:0;top:0}
+html.lin .stat b{font-size:84px;line-height:1.1}
+html.lin .stat p{position:static;width:auto;font-size:18px;line-height:1.45}
+html.lin .feel{position:relative;left:auto;top:auto;height:3em!important;width:100%}
+html.lin .seq{opacity:1;transform:none}
