@@ -1,6 +1,8 @@
 // cursor dot
 const dot=document.createElement('div');dot.id='dot';document.body.appendChild(dot);
-addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';dot.classList.toggle('hov',!!e.target.closest('a,button,video'))});
+addEventListener('mousemove',e=>{dot.classList.add('on');dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';dot.classList.toggle('hov',!!e.target.closest('a,button,video'))});
+document.addEventListener('mouseleave',()=>dot.classList.remove('on'));
+
 
 // reveal on scroll
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});

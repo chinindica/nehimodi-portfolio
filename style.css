@@ -345,3 +345,7 @@ p{text-wrap:pretty}
 .lamp{overflow:visible!important;clip-path:inset(0 -120px -160px -120px)}
 @media (max-width:600px){.pov-hero h1{right:18px;font-size:31px;letter-spacing:.01em}.pov-hero h1 br{display:none}}
 @media (max-width:600px){.bulb .glass{box-shadow:0 0 36px 10px rgba(226,204,91,.25)}}
+/* the dot is the only cursor (mouse/trackpad devices) */
+@media (hover:hover) and (pointer:fine){html,body,*,*:before,*:after{cursor:none!important}}
+#dot{z-index:2147483647;opacity:0}
+#dot.on{opacity:1}

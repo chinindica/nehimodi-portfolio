@@ -33,3 +33,13 @@
   const hov=document.querySelector('.hov');
   if(hov){const imgs=[...hov.querySelectorAll('img')];document.querySelectorAll('.seq').forEach(s=>{const n=s.dataset.seq;s.addEventListener('mouseenter',()=>imgs.forEach(i=>i.classList.toggle('on',i.dataset.for===n)))})}
 })();
+
+// videos start from the beginning when scrolled into view, pause when they leave
+(function(){
+  const vids=document.querySelectorAll('video[data-inview]');if(!vids.length)return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
+    if(e.isIntersecting){if(!v._playing){v.currentTime=0;v._playing=true;const p=v.play();if(p)p.catch(()=>{})}}
+    else if(e.intersectionRatio===0||!e.isIntersecting){v.pause();v._playing=false}
+  }),{threshold:.35});
+  vids.forEach(v=>io.observe(v));
+})();
