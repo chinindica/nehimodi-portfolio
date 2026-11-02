@@ -373,3 +373,9 @@ footer .big svg{display:block;will-change:transform}
  nav.top{display:flex!important;justify-content:space-between!important;gap:0!important;width:100%!important;left:0!important;transform:none!important;padding-left:16px!important;padding-right:16px!important;box-sizing:border-box}
 }
 html{scroll-behavior:auto}
+/* phone footer fills the screen: content centred, NEHI MODI at the bottom */
+@media (max-width:600px){
+ footer{min-height:100vh;min-height:100svh;padding:56px 20px 24px}
+ footer h4{margin-top:auto}
+ footer .big{margin-top:auto;padding-top:40px}
+}
