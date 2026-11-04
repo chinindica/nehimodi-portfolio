@@ -161,3 +161,12 @@ html.lin .el.bar{position:relative;left:auto;top:auto;width:min(100%,var(--w))!i
 .el.i.drawv{clip-path:inset(0 0 var(--dr,100%) 0)}
 html.lin .el.i.draw,html.lin .el.i.drawv{clip-path:none}
 html.lin .el.bar span{font-size:10.5px}html.lin img.draw{display:none}
+
+/* sound button on videos with audio */
+.vsound{position:absolute;left:calc(var(--x) + var(--w) - 132px);top:calc(var(--y) + var(--h) - 58px);z-index:4;display:flex;align-items:center;gap:8px;height:40px;padding:0 16px 0 12px;border-radius:999px;
+ border:1px solid rgba(255,255,255,.25);background:rgba(18,18,18,.55);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);color:#eee;font:500 14px/1 Roboto,system-ui,sans-serif;cursor:pointer;transition:background .25s,transform .15s}
+.vsound:hover{background:rgba(214,57,12,.85)}
+.vsound:active{transform:scale(.96)}
+.vsound.on{background:rgba(255,255,255,.14)}
+html.lin .xl.hasv{position:relative}
+html.lin .vsound{left:auto;top:auto;right:10px;bottom:10px;height:34px;font-size:12.5px;padding:0 12px 0 10px}

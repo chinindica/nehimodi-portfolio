@@ -62,3 +62,17 @@
     paths.forEach(i=>{const r=i.getBoundingClientRect();const p=Math.min(Math.max((H*.9-r.top)/(r.height+H*.35),0),1);i.style.setProperty('--dr',((1-p)*100).toFixed(1)+'%')})};
   addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
 })();
+
+// videos with sound: they start muted (browsers only allow that), a speaker button turns the sound on
+(function(){
+  const ON='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+  const OFF='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m16 9 6 6M22 9l-6 6"/></svg>';
+  document.querySelectorAll('video[data-sound]').forEach(v=>{
+    const b=document.createElement('button');b.type='button';b.className='vsound';b.setAttribute('aria-label','Turn sound on');b.innerHTML=OFF+'<span>Sound</span>';
+    b.style.cssText=v.getAttribute('style');v.after(b);
+    if(v.parentElement.classList.contains('xl'))v.parentElement.classList.add('hasv');
+    const set=on=>{v.muted=!on;b.innerHTML=(on?ON:OFF)+'<span>'+(on?'Sound on':'Sound')+'</span>';b.classList.toggle('on',on);b.setAttribute('aria-label',on?'Mute':'Turn sound on');if(on&&v.paused){const p=v.play();if(p)p.catch(()=>{})}};
+    b.addEventListener('click',e=>{e.stopPropagation();set(v.muted)});
+    v.addEventListener('click',()=>set(v.muted));v.style.cursor='pointer';
+  });
+})();
