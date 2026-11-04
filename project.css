@@ -195,3 +195,31 @@ html.lin .el.mob .mcards{display:flex;flex-direction:column;gap:14px;width:100%}
 .mcard p{font-size:12.5px;line-height:1.45;color:#8a8a8a;margin:2px 0 0}
 .mcard p span{color:#cfcfcf}
 html.lin .pc{max-width:760px;margin-left:auto;margin-right:auto;box-sizing:border-box}
+/* phones: an image that is cropped on the desktop keeps the same crop (no blank bands, edges line up) */
+html.lin .xl>.el.i{clip-path:none!important}
+html.lin .xl>.el.i[style*="--ar"]{aspect-ratio:var(--ar);object-fit:cover;object-position:var(--op);height:auto}
+html.lin .xl{text-align:left}
+/* phones: the project's colour wash runs behind the whole intro, edge to edge */
+html.lin .pc{background:none!important}
+html.lin .xs.x0{position:relative;isolation:isolate;padding-bottom:28px}
+html.lin .xs.x0::before{content:"";position:absolute;z-index:-1;top:-110px;bottom:0;left:50%;width:100vw;transform:translateX(-50%);
+ background:var(--herobg,none);background-size:100% 100%}
+html.lin .xs.x0::after{content:"";position:absolute;z-index:-1;left:50%;width:100vw;transform:translateX(-50%);bottom:0;height:90px;background:linear-gradient(transparent,#121212)}
+html.lin .xc.pics .el.i{width:100%!important;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:6px}
+html.lin .mstack .el.i{width:56px!important;height:auto;margin:6px 0 4px}
+/* people row: each figure gives a small lift as it lights up */
+.pp{transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.pp.lit{transform:translateY(-4px)}
+.mlayers img{width:100%;height:auto;display:block;margin-bottom:12px}
+.mlayers ol{list-style:none;margin:0;padding:0;display:grid;gap:10px;counter-reset:l}
+.mlayers li{display:grid;grid-template-columns:24px 1fr;column-gap:10px;counter-increment:l}
+.mlayers li::before{content:counter(l);grid-row:span 2;width:22px;height:22px;border-radius:50%;border:1px solid #666;color:#bbb;font-size:12px;display:grid;place-items:center}
+.mlayers b{font-weight:500;color:#ddd;font-size:15px}
+.mlayers span{color:#8a8a8a;font-size:13px}
+.mfilms .cap{font-size:13px;color:#cfcfcf;margin:0 0 8px}
+.mfilms .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+.mfilms figure{margin:0}
+.mfilms img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;display:block}
+.mfilms figcaption{font-size:12px;color:#9a9a9a;margin-top:5px}
+html.lin .mstack{border:1.5px solid #1d55b4;border-radius:22px;padding:18px 16px 16px;margin:6px 0 14px;width:100%;box-sizing:border-box}
+@media (min-width:640px){html.lin .xc .el.t{font-size:min(var(--mfs),15px)!important}}

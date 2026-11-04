@@ -36,7 +36,7 @@
     const pct=s=>{const m=s.textContent.match(/([\d.]+)\s*%/);return m?parseFloat(m[1]):0};
     let k=0,auto=null,idle=null;
     const show=i=>{const s=stats[i],n=pct(s)/10;stats.forEach(x=>x.classList.toggle('act',x===s));document.documentElement.classList.add('statson');
-      icons.forEach((ic,j)=>{const f=Math.max(0,Math.min(1,n-j));ic.style.transitionDelay=(j*70)+'ms';ic.style.setProperty('--f',f.toFixed(2))})};
+      icons.forEach((ic,j)=>{const f=Math.max(0,Math.min(1,n-j));ic.style.transitionDelay=(j*70)+'ms';ic.querySelector('.l').style.transitionDelay=(j*70)+'ms';ic.style.setProperty('--f',f.toFixed(2));ic.classList.remove('lit');setTimeout(()=>{if(f>0)ic.classList.add('lit');setTimeout(()=>ic.classList.remove('lit'),420)},j*70)})};
     const start=()=>{clearInterval(auto);auto=setInterval(()=>{k=(k+1)%stats.length;show(k)},2600)};
     stats.forEach((s,i)=>{s.addEventListener('mouseenter',()=>{clearInterval(auto);clearTimeout(idle);k=i;show(i)});
       s.addEventListener('mouseleave',()=>{clearTimeout(idle);idle=setTimeout(start,2600)})});
