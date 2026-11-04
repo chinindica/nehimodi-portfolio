@@ -30,16 +30,17 @@
   // Ecohumps survey stats reveal one by one when the section comes into view
   const seq=[...document.querySelectorAll('.seq')];
   if(seq.length){const io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting)){seq.sort((a,b)=>a.dataset.seq-b.dataset.seq).forEach((e,k)=>setTimeout(()=>e.classList.add('in'),k*650));io.disconnect()}},{threshold:.3});io.observe(seq[0])}
-  // Ecohumps: hovering a stat lights up that share of the people row
-  const hov=document.querySelector('.hov');
-  if(hov){const imgs=[...hov.querySelectorAll('img')];const stats=[...document.querySelectorAll('.seq')].sort((a,b)=>a.dataset.seq-b.dataset.seq);
-    // the stats take turns on their own, so it is clear each number drives the row of people; hovering takes over
+  // Ecohumps: the stats take turns; the active percentage turns bold and the row of people fills in one by one to match it
+  const ppl=document.querySelector('.el.people');
+  if(ppl){const icons=[...ppl.querySelectorAll('.pp')];const stats=[...document.querySelectorAll('.seq')].sort((a,b)=>a.dataset.seq-b.dataset.seq);
+    const pct=s=>{const m=s.textContent.match(/([\d.]+)\s*%/);return m?parseFloat(m[1]):0};
     let k=0,auto=null,idle=null;
-    const show=n=>{imgs.forEach(i=>i.classList.toggle('on',i.dataset.for===String(n)));stats.forEach(s=>s.classList.toggle('act',s.dataset.seq===String(n)));document.documentElement.classList.add('statson')};
-    const start=()=>{clearInterval(auto);auto=setInterval(()=>{k=(k+1)%stats.length;show(stats[k].dataset.seq)},2400)};
-    stats.forEach((s,i)=>{s.addEventListener('mouseenter',()=>{clearInterval(auto);clearTimeout(idle);k=i;show(s.dataset.seq)});
-      s.addEventListener('mouseleave',()=>{clearTimeout(idle);idle=setTimeout(start,3000)})});
-    new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!auto){show(stats[0].dataset.seq);start()}}else{clearInterval(auto);auto=null}},{threshold:.4}).observe(stats[0]);}
+    const show=i=>{const s=stats[i],n=pct(s)/10;stats.forEach(x=>x.classList.toggle('act',x===s));document.documentElement.classList.add('statson');
+      icons.forEach((ic,j)=>{const f=Math.max(0,Math.min(1,n-j));ic.style.transitionDelay=(j*70)+'ms';ic.style.setProperty('--f',f.toFixed(2))})};
+    const start=()=>{clearInterval(auto);auto=setInterval(()=>{k=(k+1)%stats.length;show(k)},2600)};
+    stats.forEach((s,i)=>{s.addEventListener('mouseenter',()=>{clearInterval(auto);clearTimeout(idle);k=i;show(i)});
+      s.addEventListener('mouseleave',()=>{clearTimeout(idle);idle=setTimeout(start,2600)})});
+    new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!auto){show(k);start()}}else{clearInterval(auto);auto=null}},{threshold:.3}).observe(ppl);}
 })();
 
 // videos start from the beginning when scrolled into view, pause when they leave

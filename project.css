@@ -142,7 +142,7 @@ html.statson .seq.in.act{opacity:1}
 .seq::after{content:"";position:absolute;left:0;bottom:-10px;height:2px;width:0;background:#d6390c;transition:width .6s cubic-bezier(.2,.8,.2,1)}
 .seq.act::after{width:46px}
 .seq:hover{opacity:1!important}
-html.lin .seq{opacity:1!important}html.lin .seq::after{display:none}
+html.lin .seq::after{display:none}
 
 /* rounded outline boxes, connector dots, arrows (ReRoot / Off-Clock) */
 .rbox{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);border:1.6px solid;z-index:1;pointer-events:none}
@@ -170,3 +170,28 @@ html.lin .el.bar span{font-size:10.5px}html.lin img.draw{display:none}
 .vsound.on{background:rgba(255,255,255,.14)}
 html.lin .xl.hasv{position:relative}
 html.lin .vsound{left:auto;top:auto;right:10px;bottom:10px;height:34px;font-size:12.5px;padding:0 12px 0 10px}
+
+/* Ecohumps people row: each figure fills in, left to right, to show the active percentage */
+.el.people{display:flex;gap:var(--gap);height:var(--h);z-index:2;pointer-events:none}
+.pp{position:relative;flex:0 0 var(--sz);height:var(--sz);display:block;--f:0}
+.pp span{position:absolute;inset:0;display:block}
+.pp svg{width:100%;height:100%;display:block}
+.pp .b svg{fill:#956125}
+.pp .l{clip-path:inset(0 calc((1 - var(--f)) * 100%) 0 0);transition:clip-path .55s cubic-bezier(.2,.8,.2,1)}
+.pp .l svg{fill:#fec36a}
+.pp{transition:transform .4s}
+html.statson .seq.in span[style*="font-weight"]{font-weight:500!important;transition:color .4s}
+html.statson .seq.act span[style*="font-weight"]{font-weight:800!important}
+html.lin .el.people{position:static;width:100%;height:auto;gap:2.2%;margin:6px 0 14px}
+html.lin .pp{flex:1 1 0;height:auto;aspect-ratio:1}
+html.lin .xc .el.t.emo,html.lin .el.t.emo{font-size:22px!important;line-height:1.2!important}
+html.lin .xc.cards{gap:22px 16px}
+html.lin .xc.cards .el.i{border-radius:6px}
+/* phone: volunteer models as tidy cards */
+html.lin .el.mob .mcards{display:flex;flex-direction:column;gap:14px;width:100%}
+.mcard{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:center;padding:14px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(255,255,255,.02)}
+.mcard img{width:72px;height:48px;object-fit:contain}
+.mcard b{display:block;font-size:15px;color:#ddd;font-weight:600;margin-bottom:4px}
+.mcard p{font-size:12.5px;line-height:1.45;color:#8a8a8a;margin:2px 0 0}
+.mcard p span{color:#cfcfcf}
+html.lin .pc{max-width:760px;margin-left:auto;margin-right:auto;box-sizing:border-box}
