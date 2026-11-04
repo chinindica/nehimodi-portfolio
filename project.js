@@ -37,10 +37,8 @@
     let k=0,auto=null,idle=null;
     const show=i=>{const s=stats[i],n=pct(s)/10;stats.forEach(x=>x.classList.toggle('act',x===s));document.documentElement.classList.add('statson');
       icons.forEach((ic,j)=>{const f=Math.max(0,Math.min(1,n-j));ic.style.transitionDelay=(j*70)+'ms';ic.querySelector('.l').style.transitionDelay=(j*70)+'ms';ic.style.setProperty('--f',f.toFixed(2));ic.classList.remove('lit');setTimeout(()=>{if(f>0)ic.classList.add('lit');setTimeout(()=>ic.classList.remove('lit'),420)},j*70)})};
-    const start=()=>{clearInterval(auto);auto=setInterval(()=>{k=(k+1)%stats.length;show(k)},2600)};
-    stats.forEach((s,i)=>{s.addEventListener('mouseenter',()=>{clearInterval(auto);clearTimeout(idle);k=i;show(i)});
-      s.addEventListener('mouseleave',()=>{clearTimeout(idle);idle=setTimeout(start,2600)})});
-    new IntersectionObserver(es=>{if(es[0].isIntersecting){if(!auto){show(k);start()}}else{clearInterval(auto);auto=null}},{threshold:.3}).observe(ppl);}
+    // runs on its own, all the time; the mouse does not change it
+    show(0);setInterval(()=>{if(document.hidden)return;k=(k+1)%stats.length;show(k)},1700);}
 })();
 
 // videos start from the beginning when scrolled into view, pause when they leave
@@ -76,4 +74,30 @@
     b.addEventListener('click',e=>{e.stopPropagation();set(v.muted)});
     v.addEventListener('click',()=>set(v.muted));v.style.cursor='pointer';
   });
+})();
+
+// phone icebergs: join each heading to its layer on the iceberg (same points as the laptop)
+(function(){
+  const blocks=[...document.querySelectorAll('.mice')];if(!blocks.length)return;
+  const DOTS=[[.548,.141],[.548,.246],[.721,.459],[.567,.669]];
+  const NS='http://www.w3.org/2000/svg';
+  const draw=()=>blocks.forEach(b=>{
+    let s=b.querySelector('svg.ilead');if(!s){s=document.createElementNS(NS,'svg');s.setAttribute('class','ilead');b.appendChild(s)}
+    s.innerHTML='';if(!b.offsetParent)return;
+    const R=b.getBoundingClientRect(),img=b.querySelector('.pic img').getBoundingClientRect(),right=b.classList.contains('r');
+    const heads=[...b.querySelectorAll('.tx h4,.tx p')];
+    heads.forEach((h,i)=>{if(!DOTS[i])return;
+      const first=h.firstElementChild&&h.tagName==='P'?h.firstElementChild:h;
+      const rects=(first.getClientRects&&first.getClientRects()[0])||h.getBoundingClientRect();
+      const y=rects.top+Math.min(rects.height,22)/2-R.top;
+      const tx=(right?h.getBoundingClientRect().right+6:h.getBoundingClientRect().left-6)-R.left;
+      const dx=img.left-R.left+DOTS[i][0]*img.width,dy=img.top-R.top+DOTS[i][1]*img.height;
+      const kx=tx+(right?10:-10);
+      const p=document.createElementNS(NS,'path');p.setAttribute('d',`M${tx},${y}H${kx}L${dx},${dy}`);s.appendChild(p);
+      const c=document.createElementNS(NS,'circle');c.setAttribute('cx',dx);c.setAttribute('cy',dy);c.setAttribute('r',3);s.appendChild(c);
+      const c2=document.createElementNS(NS,'circle');c2.setAttribute('cx',tx);c2.setAttribute('cy',y);c2.setAttribute('r',1.6);s.appendChild(c2);
+    });
+  });
+  addEventListener('resize',draw);addEventListener('load',draw);document.fonts&&document.fonts.ready.then(draw);
+  document.querySelectorAll('.mice img').forEach(i=>i.complete?0:i.addEventListener('load',draw));draw();
 })();

@@ -136,12 +136,12 @@ html.lin .el.mob{display:flex;flex-direction:column;gap:14px;width:100%;margin:6
 html.lin .el.mob img{width:100%;height:auto;border-radius:4px}
 
 /* Ecohumps: the stats take turns lighting the people row; the active one is bright with a red underline */
-.seq{cursor:none;transition:opacity .5s,transform .7s}
+.seq{cursor:none;transition:opacity .45s,transform .7s}
 html.statson .seq.in{opacity:.42}
 html.statson .seq.in.act{opacity:1}
 .seq::after{content:"";position:absolute;left:0;bottom:-10px;height:2px;width:0;background:#d6390c;transition:width .6s cubic-bezier(.2,.8,.2,1)}
 .seq.act::after{width:46px}
-.seq:hover{opacity:1!important}
+
 html.lin .seq::after{display:none}
 
 /* rounded outline boxes, connector dots, arrows (ReRoot / Off-Clock) */
@@ -223,3 +223,61 @@ html.lin .mstack .el.i{width:56px!important;height:auto;margin:6px 0 4px}
 .mfilms figcaption{font-size:12px;color:#9a9a9a;margin-top:5px}
 html.lin .mstack{border:1.5px solid #1d55b4;border-radius:22px;padding:18px 16px 16px;margin:6px 0 14px;width:100%;box-sizing:border-box}
 @media (min-width:640px){html.lin .xc .el.t{font-size:min(var(--mfs),15px)!important}}
+/* phone: material testing laid out the way the laptop groups it */
+.mtest{font-size:13.5px;line-height:1.55;color:#cfcfcf}
+.mtest p{margin:0}
+.mtest .mlead{margin-bottom:16px}
+.mtest .mexp{display:grid;grid-template-columns:34% 1fr;gap:14px;align-items:start;margin-bottom:12px}
+.mtest .mexp img{width:100%;aspect-ratio:98/124;object-fit:cover;border-radius:4px}
+.mtest ul{margin:6px 0 0;padding-left:16px}
+.mtest li{margin:2px 0}
+.mtest .strip{display:flex;gap:8px;margin-bottom:22px}
+.mtest .strip img{min-width:0;height:96px;object-fit:cover;border-radius:4px}
+.mtest .cap{margin-bottom:8px}
+.mtest .films{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.mtest figure{margin:0}
+.mtest .films img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;display:block}
+.mtest figcaption{font-size:11px;color:#a0a0a0;text-align:center;margin-top:5px;line-height:1.3}
+.mtest .res2{margin-bottom:18px}
+.mtest .end{margin-bottom:14px;color:#cfcfcf}
+.mtest .red{color:#d6390c}
+@media (min-width:640px){.mtest .strip img{height:150px}}
+/* phone: iceberg beside its text, with dotted leaders like the laptop */
+.mice{display:grid;grid-template-columns:34% 1fr;gap:0 16px;align-items:start;width:100%}
+.mice.r{grid-template-columns:1fr 34%}
+.mice.r .pic{order:2}
+.mice .pic{position:sticky;top:70px}
+.mice .pic img{width:100%;height:auto;display:block}
+.mice .tx{min-width:0}
+.mice h4{font-size:15px;line-height:1.35;color:#dcdcdc;font-weight:600;margin:6px 0 12px;position:relative}
+.mice p{font-size:12.5px;line-height:1.55;color:#8a8a8a;margin:0 0 12px;position:relative}
+.mice p b,.mice p span[style*="font-weight"]{color:#d6d6d6}
+.mice i{position:absolute;top:.62em;right:calc(100% + 4px);width:26px;border-top:1px dotted #9a9a9a}
+.mice i::before{content:"";position:absolute;left:-4px;top:-3.5px;width:6px;height:6px;border-radius:50%;background:#e0e0e0}
+.mice.r .tx{text-align:right}
+.mice.r i{right:auto;left:calc(100% + 4px)}
+.mice.r i::before{left:auto;right:-4px}
+/* phone: the layer drawing keeps its labels on the leader lines, like the laptop */
+.mmap{position:relative;display:grid;grid-template-columns:52% 1fr;align-items:stretch;width:100%;margin:4px 0}
+.mmap img{width:100%;height:auto;display:block}
+.mmap .lbl{position:relative}
+.mmap .lbl div{position:absolute;left:0;right:0;transform:translateY(-.7em);padding-left:6px;line-height:1.25}
+.mmap .lbl div::before{content:"";position:absolute;right:100%;top:.62em;width:10px;border-top:1px solid #bdbdbd}
+.mmap b{display:block;font-weight:500;color:#e0e0e0;font-size:12px}
+.mmap span{display:block;color:#9a9a9a;font-size:10.5px;margin-top:2px}
+@media (min-width:640px){.mmap b{font-size:15px}.mmap span{font-size:13px}}
+html.lin .mwide{width:100%;height:auto;display:block;border-radius:2px}
+.mmap{align-items:center;column-gap:12px;grid-template-columns:48% 1fr!important}
+.mmap .lbl{display:flex;flex-direction:column;gap:12px}
+.mmap .lbl div{position:relative;top:auto!important;transform:none;padding-left:0}
+.mmap .lbl div::before{right:calc(100% + 2px);width:12px}
+.mtest ul{list-style:none;padding-left:0}
+.mtest li{position:relative;padding-left:12px}
+.mtest li::before{content:"•";position:absolute;left:0;color:#9a9a9a}
+/* phone icebergs: leader lines are drawn from each heading to its exact layer on the iceberg */
+.mice{position:relative}
+.mice .pic{position:relative;top:auto;align-self:center}
+.mice i{display:none}
+.mice svg.ilead{z-index:5;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.mice svg.ilead path{fill:none;stroke:#9a9a9a;stroke-width:1;stroke-dasharray:1.5 2.5}
+.mice svg.ilead circle{fill:#e6e6e6}
