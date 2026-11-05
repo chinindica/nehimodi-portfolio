@@ -370,3 +370,29 @@ html:not(.lin) img.el.i[src*="z6hms8Tduf2Xi57CXwwQ57cvbjA"]{-webkit-mask-image:l
 /* phone: space under the survey stats before the summary line */
 html.lin .xc:has(.seq){margin-bottom:22px}
 html.lin .mwho img{clip-path:inset(3% 0 0 0)}
+/* phone: How ReRoot works as a snake: Discover → Engage ↓ Participate → Reward */
+.snake{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"s1 s2" ". a2" "s4 s3";column-gap:34px;width:100%;align-items:start}
+.snake .s1{grid-area:s1}.snake .s2{grid-area:s2}.snake .s3{grid-area:s3}.snake .s4{grid-area:s4}.snake .a2{grid-area:a2}
+.snake .im{position:relative;display:block}
+.snake .st img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;display:block}
+.snake .st b{display:block;margin:10px 0 4px;font-size:15px;color:#e0e0e0;font-weight:600}
+.snake .st p{font-size:12.5px;line-height:1.5;color:#a8a8a8;margin:0}
+.snake .ra{position:absolute;top:50%;width:26px;height:12px;margin-top:-6px;display:block}
+.snake .ra.r{left:calc(100% + 4px)}
+.snake .ra.l{right:calc(100% + 4px)}
+.snake .ra.l svg{transform:rotate(180deg)}
+.snake .ra svg,.snake .a2 svg{width:26px;height:12px;display:block}
+.snake .a2{display:flex;justify-content:center;padding:14px 0 10px}
+.snake .a2 svg{transform:rotate(90deg)}
+/* phone: pointer figures keep their meaning (numbers / labels sit on the pointer dots) */
+.pfig{position:relative;margin:0 0 18px;width:100%}
+.pfig img{width:100%;height:auto;display:block}
+.pfig .nb{position:absolute;transform:translate(-50%,-50%);width:17px;height:17px;border-radius:50%;background:#d6390c;color:#fff;font:600 10px/17px Roboto,system-ui,sans-serif;text-align:center;box-shadow:0 0 0 2px #121212}
+.mfind li{padding-left:28px}
+.mfind li::before{display:none}
+.mfind .ni{position:absolute;left:0;top:.15em;width:18px;height:18px;border-radius:50%;background:#d6390c;color:#fff;font:600 10.5px/18px Roboto,system-ui,sans-serif;text-align:center;font-style:normal}
+.pfig.mos .ml{position:absolute;transform:translate(0,-135%);font:600 11.5px/1.1 Roboto,system-ui,sans-serif;color:#e6e6e6;white-space:nowrap}
+@media (min-width:640px){.pfig .nb{width:22px;height:22px;font-size:12px;line-height:22px}.pfig.mos .ml{font-size:15px}}
+.mvt{display:none}
+html.lin .mvt{display:flex;align-items:center;justify-content:center;position:absolute;left:-6px;z-index:2;writing-mode:vertical-rl;transform:rotate(180deg);
+ font-weight:700;letter-spacing:.02em;line-height:1;color:rgba(255,255,255,.38);pointer-events:none;white-space:nowrap}

@@ -140,3 +140,17 @@
       host.appendChild(s)});};
   addEventListener('load',place);addEventListener('resize',place);setTimeout(place,600);
 })();
+
+// phone/tablet covers: the project name runs up the left side, like the laptop
+(function(){
+  const vt=document.querySelector('.vclip .vt'),hero=document.querySelector('.xs.x0'),img=hero&&hero.querySelector('[data-hero]');
+  if(!vt||!hero||!img)return;
+  const n=document.createElement('div');n.className='mvt';n.textContent=vt.textContent.trim();n.setAttribute('aria-hidden','true');hero.prepend(n);
+  const fit=()=>{if(!document.documentElement.classList.contains('lin'))return;
+    if(img.naturalWidth>img.naturalHeight*1.25)img.style.setProperty('width','100%','important');
+    const hr=hero.getBoundingClientRect(),ir=img.getBoundingClientRect();
+    const h=Math.max(ir.height,180),len=n.textContent.length;
+    n.style.top=(ir.top-hr.top)+'px';n.style.height=h+'px';
+    n.style.fontSize=Math.min(h/(len*.72),ir.width*.32)+'px'};
+  addEventListener('resize',fit);addEventListener('load',fit);img.complete?fit():img.addEventListener('load',fit);setTimeout(fit,300);
+})();
