@@ -3,7 +3,7 @@
   const pc=document.querySelector('.pc');if(!pc)return;
   const wrap=document.createElement('div');wrap.className='pcw';pc.parentNode.insertBefore(wrap,pc);wrap.appendChild(pc);
   const hb=pc.querySelector('.band');if(hb)pc.style.setProperty('--herobg',hb.style.background);
-  const fit=()=>{
+  let fit=()=>{
     const w=document.documentElement.clientWidth;
     const lin=w<1000;
     document.documentElement.classList.toggle('lin',lin);
@@ -16,6 +16,10 @@
     pc.style.setProperty('--bleed',Math.max(0,(w-1512)/2)+'px');
     wrap.style.height=(parseFloat(getComputedStyle(pc).getPropertyValue('--H'))*z)+'px';
   };
+  const swap=()=>{const lin=document.documentElement.classList.contains('lin');
+    document.querySelectorAll('img[data-msrc]').forEach(i=>{if(i.closest('.mfi'))return;if(!i.dataset.dsrc)i.dataset.dsrc=i.getAttribute('src');
+      const want=lin?i.dataset.msrc:i.dataset.dsrc;if(i.getAttribute('src')!==want)i.setAttribute('src',want);i.classList.toggle('mtrim',lin)})};
+  const fit0=fit;fit=()=>{fit0();swap()};
   fit();addEventListener('resize',fit);
   const top=()=>{if(!location.hash)window.scrollTo({top:0,left:0,behavior:'instant'})};top();addEventListener('load',top);addEventListener('pageshow',top);
 
@@ -100,4 +104,21 @@
   });
   addEventListener('resize',draw);addEventListener('load',draw);document.fonts&&document.fonts.ready.then(draw);
   document.querySelectorAll('.mice img').forEach(i=>i.complete?0:i.addEventListener('load',draw));draw();
+})();
+
+// phones: the laptop's red highlight box and purple glows follow their content
+(function(){
+  const done=new WeakSet();
+  const R=e=>{const s=e.getAttribute('style')||'';const g=k=>{const m=s.match(new RegExp('--'+k+':(-?[\\d.]+)px'));return m?+m[1]:null};return {x:g('x'),y:g('y'),w:g('w'),h:g('h')}};
+  const run=()=>{if(!document.documentElement.classList.contains('lin'))return;
+    document.querySelectorAll('i.box').forEach(b=>{const r=R(b);document.querySelectorAll('.xcc').forEach(c=>{const f=c.querySelector('.el');if(!f)return;const q=R(f);
+      if(q.x>=r.x-10&&q.x<=r.x+r.w&&q.y>=r.y-10&&q.y<=r.y+r.h)c.classList.add('hlbox')})});
+    document.querySelectorAll('i.glow').forEach(g=>{if(done.has(g))return;const r=R(g),cx=r.x+r.w/2,cy=r.y+r.h/2;
+      const img=[...document.querySelectorAll('.xl>img.el.i')].find(i=>{const q=R(i);return q.w&&cx>=q.x&&cx<=q.x+q.w&&cy>=q.y&&cy<=q.y+q.h});
+      if(!img)return;const q=R(img);const d=document.createElement('i');d.className='mglow';
+      img.parentElement.appendChild(d);done.add(g);
+      const place=()=>{const W=img.offsetWidth,H=img.offsetHeight;d.style.cssText=`left:${img.offsetLeft+(r.x-q.x)/q.w*W}px;top:${img.offsetTop+(r.y-q.y)/q.h*H}px;width:${r.w/q.w*W}px;height:${r.h/q.h*H}px`};
+      place();addEventListener('resize',place);img.addEventListener('load',place)});
+  };
+  addEventListener('load',run);addEventListener('resize',run);run();
 })();

@@ -281,3 +281,78 @@ html.lin .mwide{width:100%;height:auto;display:block;border-radius:2px}
 .mice svg.ilead{z-index:5;position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
 .mice svg.ilead path{fill:none;stroke:#9a9a9a;stroke-width:1;stroke-dasharray:1.5 2.5}
 .mice svg.ilead circle{fill:#e6e6e6}
+/* phones: images with empty margins are shown trimmed, centred, at a sensible size */
+html.lin .el.i.mtrim{aspect-ratio:auto!important;object-fit:contain!important;height:auto!important;max-height:440px;width:auto!important;max-width:100%;display:block;margin-left:auto!important;margin-right:auto!important}
+html.lin .xl>.el.i.mtrim{max-width:100%}
+html.lin .xl>.el.i.mtrim[data-hero]{max-height:300px}
+html.lin .xc .el.i.mtrim{height:130px!important;width:100%!important;max-height:none;object-fit:contain!important;object-position:center bottom}
+html.lin .xc.pics .el.i.mtrim{height:auto!important;aspect-ratio:4/3!important}
+/* dark text meant to sit on a light render: readable on the dark phone layout */
+html.lin .el.t[style*="color:#121212"],html.lin .el.t[style*="color:#000000"]:not(.emo){color:#cfcfcf!important}
+/* ---- phone fragments ---- */
+.mpair{display:flex;justify-content:center;gap:28%;align-items:flex-end;margin:20px 0 6px}
+.mpair img{height:150px;width:auto;object-fit:contain}
+.mblk{width:100%;font-size:14px;line-height:1.55;color:#cfcfcf}
+.mblk h5{font-size:17px;font-weight:700;color:#d6d6d6;margin:22px 0 8px}
+.mblk h5:first-child{margin-top:0}
+.mblk p{margin:0 0 12px}
+.mblk p.g{color:#8a8a8a}
+.mblk img.full{width:100%;height:auto;display:block;margin:6px 0 14px;border-radius:2px}
+.mblk .cap{color:#8a8a8a;font-size:16px;margin:4px 0 8px}
+.mblk .caps4{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:-8px 0 14px;font-size:11px;color:#bdbdbd;text-align:center;line-height:1.25}
+.mblk ul.ticks{list-style:none;margin:4px 0 0;padding:0}
+.mblk ul.ticks li{position:relative;padding-left:18px;margin:6px 0;color:#d6d6d6}
+.mblk ul.ticks li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:#a5527c}
+.mblk .lead2{color:#8a8a8a;font-size:16px;line-height:1.5;margin:4px 0 26px}
+.mblk h3.red{color:#d6390c;font-size:24px;font-weight:400;margin:0 0 14px}
+.mblk .redline{color:#d6390c;font-size:18px;line-height:1.4;margin-bottom:12px}
+.mblk .steps{display:grid;grid-template-columns:1fr 1fr;gap:20px 14px}
+.mblk .st img{width:100%;height:auto;display:block;margin-bottom:8px}
+.mblk .st b{display:block;font-size:15px;color:#d6d6d6;margin-bottom:4px}
+.mblk .st p{font-size:12.5px;line-height:1.5;color:#bdbdbd;margin:0}
+.mblk .side{display:grid;grid-template-columns:28% 1fr;gap:14px;align-items:center}
+.mblk .side img{width:100%;height:auto}
+.mblk .side p{margin:0;font-size:13px}
+.mfind ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.mfind ul+ul{margin-top:22px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+.mfind li{position:relative;padding-left:20px;font-size:14px;line-height:1.5;color:#9a9a9a}
+.mfind li::before{content:"";position:absolute;left:0;top:.5em;width:8px;height:8px;border-radius:50%;background:#d6390c}
+.mfind li b{color:#dcdcdc;font-weight:500}
+.mmos{display:grid;gap:16px;width:100%}
+.mmos>div{border-left:2px solid #3a3a3a;padding-left:14px}
+.mmos h6{font-size:17px;font-weight:600;color:#dcdcdc;margin:0 0 6px}
+.mmos ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.mmos li{font-size:13px;color:#a8a8a8;border:1px solid #333;border-radius:999px;padding:4px 10px;line-height:1.3}
+.mstruct{display:grid;grid-template-columns:1fr 1fr;gap:18px 12px;width:100%}
+.mstruct figure{margin:0}
+.mstruct .wide{grid-column:1/-1}
+.mstruct figcaption{font-size:12.5px;line-height:1.4;color:#9a9a9a;margin-bottom:6px;min-height:2.8em}
+.mstruct .wide figcaption{min-height:0}
+.mstruct img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px;display:block}
+.mstruct .wide img{aspect-ratio:auto}
+.mwho{display:grid;grid-template-columns:1fr 1fr;gap:24px 16px;width:100%}
+.mwho figure{margin:0;display:flex;flex-direction:column}
+.mwho img{height:150px;width:100%;object-fit:contain;object-position:center bottom;margin-bottom:10px}
+.mwho b{font-size:15px;font-weight:500;color:#dcdcdc}
+.mwho p{font-size:13px;color:#a8a8a8;margin:4px 0 0;line-height:1.4}
+/* layer drawing: each label sits exactly on its leader line */
+.mmap{grid-template-columns:56% 1fr!important;align-items:start;column-gap:8px}
+.mmap .lbl{position:relative;display:block;align-self:stretch}
+.mmap .lbl div{position:absolute;left:0;right:0;transform:translateY(-.62em)}
+.mmap .lbl div:nth-child(1){top:11.9%!important}
+.mmap .lbl div:nth-child(2){top:44.4%!important}
+.mmap .lbl div:nth-child(3){top:84%!important}
+.mmap .lbl div::before{right:calc(100% + 1px);width:9px;top:.62em}
+.mmap b{font-size:11.5px}.mmap span{font-size:10px;line-height:1.25}
+.mmap{margin-bottom:22px}
+/* journey highlight on phones (the red box on the laptop) */
+html.lin .hlbox{outline:1.5px solid #d6390c;outline-offset:6px;border-radius:4px}
+/* purple highlights on phones */
+html.lin .xl{position:relative}
+.mglow{position:absolute;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(150,55,115,.85) 0%,rgba(120,40,95,.6) 45%,rgba(90,25,70,0) 75%);filter:blur(4px)}
+html.lin .el.mob .mpair img{height:160px!important;width:auto!important;max-width:40%;object-fit:contain;border-radius:0}
+html.lin .el.mob .mwho img{width:100%;height:150px}
+html.lin .el.mob .mstruct img{width:100%}
+html.lin .el.mob .mblk .side img{width:100%}
+html.lin .el.mob .mtest .strip img{width:auto}
+html.lin .el.mob .mcard img{width:72px;height:48px}
