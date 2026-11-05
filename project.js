@@ -122,3 +122,21 @@
   };
   addEventListener('load',run);addEventListener('resize',run);run();
 })();
+
+// phone: purple highlights on the sketches, placed on the same spots as the laptop
+(function(){
+  const glows=[...document.querySelectorAll('i.glow')];if(!glows.length)return;
+  const v=(e,k)=>parseFloat((e.getAttribute('style').match(new RegExp('--'+k+':(-?[\\d.]+)px'))||[])[1]);
+  const imgs=[...document.querySelectorAll('img.el.i')].filter(i=>i.getAttribute('style'));
+  const place=()=>{document.querySelectorAll('.mglow').forEach(e=>e.remove());
+    if(!document.documentElement.classList.contains('lin'))return;
+    glows.forEach(g=>{const gx=v(g,'x'),gy=v(g,'y'),gw=v(g,'w'),gh=v(g,'h'),cx=gx+gw/2,cy=gy+gh/2;
+      const im=imgs.find(i=>{const x=v(i,'x'),y=v(i,'y'),w=v(i,'w'),h=v(i,'h');return cx>x&&cx<x+w&&cy>y&&cy<y+h&&i.offsetParent});
+      if(!im)return;const x=v(im,'x'),y=v(im,'y'),w=v(im,'w'),h=v(im,'h');
+      const host=im.parentElement;if(getComputedStyle(host).position==='static')host.style.position='relative';
+      const s=document.createElement('i');s.className='mglow';
+      const L=im.offsetLeft,T=im.offsetTop,W=im.offsetWidth,H=im.offsetHeight;
+      s.style.cssText=`left:${L+(gx-x)/w*W}px;top:${T+(gy-y)/h*H}px;width:${gw/w*W}px;height:${gh/h*H}px;z-index:2`;
+      host.appendChild(s)});};
+  addEventListener('load',place);addEventListener('resize',place);setTimeout(place,600);
+})();

@@ -356,3 +356,17 @@ html.lin .el.mob .mstruct img{width:100%}
 html.lin .el.mob .mblk .side img{width:100%}
 html.lin .el.mob .mtest .strip img{width:auto}
 html.lin .el.mob .mcard img{width:72px;height:48px}
+/* phone: product renders keep their captions / labels */
+.mrend{display:flex;flex-direction:column;gap:16px;width:100%}
+.mrend figure{margin:0;position:relative}
+.mrend img{width:100%;height:auto;display:block}
+.mrend figcaption{font-size:13px;color:#a8a8a8;margin-top:8px;line-height:1.45}
+.mrend .ov span{position:absolute;font-size:9.5px;color:#1a1a1a;line-height:1.2;white-space:nowrap}
+@media (min-width:640px){.mrend .ov span{font-size:14px}}
+/* phone: a little more room between the stats and the line under them */
+html.lin .seq{margin-bottom:6px!important}
+/* ReRoot laptop hero: photo edges melt into the extended background, so no seam on wide screens */
+html:not(.lin) img.el.i[src*="z6hms8Tduf2Xi57CXwwQ57cvbjA"]{-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 82%,transparent 91%);mask-image:linear-gradient(90deg,transparent 0,#000 9%,#000 82%,transparent 91%)}
+/* phone: space under the survey stats before the summary line */
+html.lin .xc:has(.seq){margin-bottom:22px}
+html.lin .mwho img{clip-path:inset(3% 0 0 0)}
